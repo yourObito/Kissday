@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiss Day Gift Box</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fff5f5;
+            font-family: 'Indie Flower', cursive;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffebee;
+            padding: 40px;
+            border-radius: 20px;
+            border: 3px solid #ff6b81;
+            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.3);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .header_text {
+            font-size: 32px;
+            color: #ff6b81;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 107, 129, 0.2);
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 15px;
+            font-size: 20px;
+            border: 2px solid #ff6b81;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: #ff6b81;
+            color: white;
+            font-family: 'Indie Flower', cursive;
+            box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
+        }
+
+        .btn:hover {
+            background-color: white;
+            color: #ff6b81;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 107, 129, 0.4);
+        }
+
+        .display {
+            font-size: 24px;
+            letter-spacing: 5px;
+            color: #ff6b81;
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 10px;
+            display: inline-block;
+            width: 120px;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .kiss-message {
+            font-size: 22px;
+            color: #ff6b81;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
+        }
+
+        @keyframes heart-float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff6b81;
+            animation: heart-float 4s linear infinite;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="giftBox">
+        <h2 class="header_text">Enter Password to Unlock the Gift</h2>
+        <div class="display" id="passwordDisplay">____</div>
+        <div class="keypad">
+            <button class="btn" onclick="addToPassword('1')">1</button>
+            <button class="btn" onclick="addToPassword('2')">2</button>
+            <button class="btn" onclick="addToPassword('3')">3</button>
+            <button class="btn" onclick="addToPassword('4')">4</button>
+            <button class="btn" onclick="addToPassword('5')">5</button>
+            <button class="btn" onclick="addToPassword('6')">6</button>
+            <button class="btn" onclick="addToPassword('7')">7</button>
+            <button class="btn" onclick="addToPassword('8')">8</button>
+            <button class="btn" onclick="addToPassword('9')">9</button>
+            <button class="btn" onclick="clearPassword()">C</button>
+            <button class="btn" onclick="submitPassword()">Unlock</button>
+        </div>
+    </div>
+
+    <div class="container hidden" id="kissMessage">
+        <h2 class="header_text">💋 Happy Kiss Day 💋</h2>
+        <p class="kiss-message">
+            Every kiss is a promise of love, a whisper of care, and a reminder that you are cherished beyond words. 
+            On this Kiss Day, I send you a thousand imaginary kisses to fill your heart with warmth and joy. 
+            May our love always shine as bright as the stars and our kisses always feel as magical as the first one. 
+            You are my forever Valentine, and I can’t wait to hold you close and shower you with endless love. 💋💕
+        </p>
+    </div>
+
+    <script>
+        let password = "";
+
+        function addToPassword(num) {
+            if (password.length < 4) {
+                password += num;
+                updatePasswordDisplay();
+            }
+        }
+
+        function clearPassword() {
+            password = "";
+            updatePasswordDisplay();
+        }
+
+        function updatePasswordDisplay() {
+            document.getElementById("passwordDisplay").textContent = password.padEnd(4, "_");
+        }
+
+        function submitPassword() {
+            if (password === "5555") {
+                document.getElementById("giftBox").classList.add("hidden");
+                document.getElementById("kissMessage").classList.remove("hidden");
+                createHeartEffect();
+            } else {
+                alert("Incorrect password! Try again.");
+                clearPassword();
+            }
+        }
+
+        function createHeartEffect() {
+            setInterval(() => {
+                const heart = document.createElement("div");
+                heart.innerText = "💖";
+                heart.classList.add("heart");
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 4000);
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>
